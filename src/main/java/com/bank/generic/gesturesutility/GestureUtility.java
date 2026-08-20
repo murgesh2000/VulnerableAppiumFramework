@@ -13,8 +13,8 @@ public class GestureUtility {
 
 	AndroidDriver driver;
 
-	public void GestureUtility(AndroidDriver driver) {
-		this.driver=driver;
+	public GestureUtility(AndroidDriver driver) {
+		this.driver = driver;
 	}
 
 	public void clickByElements(WebElement element) {

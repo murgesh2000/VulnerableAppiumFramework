@@ -8,7 +8,8 @@ public class FileUtility {
 
 	public String dataFromPropertiesFile(String Key) throws IOException {
 
-		FileInputStream fis = new FileInputStream("./commonData.properties");
+		FileInputStream fis = new FileInputStream(
+				"C:\\Users\\USER\\eclipse-workspace\\VulnerableAppiumFramework\\src\\main\\resources\\commonData.properties");
 
 		Properties p = new Properties();
 		p.load(fis);

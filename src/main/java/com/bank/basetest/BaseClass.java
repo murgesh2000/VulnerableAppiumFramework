@@ -40,22 +40,40 @@ public class BaseClass {
 	}
 
 	@BeforeClass(alwaysRun = true)
-	public void launchApp(String deviceName, String UDID, int port) throws IOException {
-		DesiredCapabilities dc = new DesiredCapabilities();
-		dc.setCapability("platformName", fUtil.dataFromPropertiesFile("platformName"));
-		dc.setCapability("automationName", fUtil.dataFromPropertiesFile("automationName"));
-		dc.setCapability("deviceName", fUtil.dataFromPropertiesFile("deviceName"));
-		dc.setCapability("Udid", fUtil.dataFromPropertiesFile("udid"));
+	public void launchApp() throws IOException {
+		/*
+		 * DesiredCapabilities dc = new DesiredCapabilities();
+		 * dc.setCapability("platformName",
+		 * fUtil.dataFromPropertiesFile("platformName"));
+		 * dc.setCapability("automationName",
+		 * fUtil.dataFromPropertiesFile("automationName"));
+		 * dc.setCapability("deviceName", fUtil.dataFromPropertiesFile("deviceName"));
+		 * dc.setCapability("Udid", fUtil.dataFromPropertiesFile("udid"));
+		 * 
+		 * dc.setCapability("appPackage", fUtil.dataFromPropertiesFile("appPackage"));
+		 * dc.setCapability("appActivity", fUtil.dataFromPropertiesFile("appActivity"));
+		 */
 
-		dc.setCapability("appPackage", fUtil.dataFromPropertiesFile("appPackage"));
-		dc.setCapability("appActivity", fUtil.dataFromPropertiesFile("appActivity"));
+		UiAutomator2Options op = new UiAutomator2Options();
+		op.setPlatformName(fUtil.dataFromPropertiesFile("platformName"));
+		op.setAutomationName(fUtil.dataFromPropertiesFile("automationName"));
+		op.setDeviceName(fUtil.dataFromPropertiesFile("deviceName"));
+		op.setUdid(fUtil.dataFromPropertiesFile("udid"));
+
+		op.setIgnoreHiddenApiPolicyError(true);
+//		op.noReset();
+		op.setAutoGrantPermissions(true);
+
+		op.setAppPackage(fUtil.dataFromPropertiesFile("appPackage"));
+		op.setAppActivity(fUtil.dataFromPropertiesFile("appActivity"));
 
 		URL url = new URL("http://localhost:4723");
 
-		driver = new AndroidDriver(url, dc);
+		driver = new AndroidDriver(url, op);
 		sdriver = driver;
 
-		UiAutomator2Options op = new UiAutomator2Options();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
 	}
 
 	@AfterSuite(alwaysRun = true)
